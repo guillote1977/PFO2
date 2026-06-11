@@ -1,0 +1,20 @@
+Rol y Objetivo: Actúa como un Desarrollador Frontend Senior experto en UX/UI. Tu tarea es escribir el código completo, funcional y de nivel profesional para una Landing Page moderna enfocada en la Acuariofilia (una tienda y consultora especializada en paisajismo acuático, plantas y peces tropicales como discus, escalares y kois). El código debe estar listo para ser desplegado en Vercel sin necesidad de modificaciones manuales.
+Estructura obligatoria de la página:
+Header: Barra de navegación superior fija (sticky) con un logo en texto a la izquierda y un menú a la derecha.
+Hero Section: Sección principal de alto impacto visual. Debe tener un título llamativo, un párrafo persuasivo y un botón principal (Call to Action).
+Sobre Nosotros: Una sección de descripción que cuente brevemente la pasión por la acuariofilia y la misión de la tienda.
+Características / Servicios: Una sección explicativa dividida estrictamente en un diseño de 3 columnas (usando CSS Grid o Flexbox). Las columnas deben ser: 1) Peces Tropicales, 2) Paisajismo Acuático, 3) Equipamiento y Kois.
+Testimonios: 3 reseñas de clientes felices maquetadas en tarjetas (cards).
+Formulario de Contacto: El maquetado visual de un formulario simple para consultas.
+Footer: Pie de página con enlaces corporativos y redes sociales.
+Restricciones y lineamientos técnicos (Buenas prácticas de Front-End):
+Manejo estricto de Imágenes: Es obligatorio que utilices exactamente las siguientes URLs para ilustrar la web:
+Hero Section: https://h.hannainst.com.mx/wp-content/uploads/Paisajismo-acua%CC%81tico-600x232.png
+Columna 1 (Peces): https://cdn.shopify.com/s/files/1/0311/3149/files/shutterstock_96677104.jpg?v=1584639688
+Columna 2 (Paisajismo): https://cdn0.expertoanimal.com/es/posts/5/3/4/escalar_panda_27435_4_600.webp
+Columna 3 (Equipamiento): https://muyinteresante.okdiario.com/wp-content/uploads/sites/5/2022/10/13/6347fb6714174.jpeg
+Sistema de Fallback (Imágenes rotas): Todas las etiquetas <img> deben incluir obligatoriamente el atributo onerror apuntando a una imagen de respaldo, por ejemplo: onerror="this.src='https://source.unsplash.com/800x600/?aquarium,fish'".
+Ajuste visual: Aplica estrictamente la propiedad CSS object-fit: cover junto con width: 100% en las imágenes, asegurando que los contenedores tengan un límite de alto y overflow: hidden.
+HTML5 Semántico y CSS Moderno: Utiliza etiquetas semánticas (<header>, <main>, <section>). Define variables CSS (:root) para una paleta armónica.
+Layout y Animaciones: Usa Flexbox y CSS Grid. Agrega transiciones suaves y efectos :hover en botones y tarjetas.
+Responsividad: Diseño 100% Mobile-First. El código CSS debe estar integrado para funcionar con un simple copiar y pegar.

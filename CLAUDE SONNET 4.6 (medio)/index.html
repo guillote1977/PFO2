@@ -1,0 +1,1332 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AquaVerde — Paisajismo & Peces Tropicales</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+
+  <style>
+    /* ─── TOKENS ─────────────────────────────────────────────────────── */
+    :root {
+      --ink:        #0d1a14;
+      --deep:       #0a2318;
+      --mid:        #1a4a33;
+      --teal:       #2d8c6e;
+      --aqua:       #4ec9a5;
+      --mist:       #d4efe8;
+      --cream:      #f5f9f7;
+      --white:      #ffffff;
+      --gold:       #b8a96a;
+
+      --display: 'Cormorant Garamond', Georgia, serif;
+      --body:    'DM Sans', system-ui, sans-serif;
+
+      --radius-sm: 4px;
+      --radius-md: 10px;
+      --radius-lg: 20px;
+      --transition: 0.35s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    }
+
+    /* ─── RESET ──────────────────────────────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: var(--body);
+      font-weight: 300;
+      color: var(--ink);
+      background: var(--cream);
+      overflow-x: hidden;
+    }
+    img { display: block; max-width: 100%; }
+    a { text-decoration: none; color: inherit; }
+    ul { list-style: none; }
+
+    /* ─── UTILITIES ──────────────────────────────────────────────────── */
+    .container {
+      width: 100%;
+      max-width: 1180px;
+      margin: 0 auto;
+      padding: 0 1.5rem;
+    }
+    .section-label {
+      display: inline-block;
+      font-family: var(--body);
+      font-size: 0.7rem;
+      font-weight: 500;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--teal);
+      margin-bottom: 0.75rem;
+    }
+    .section-title {
+      font-family: var(--display);
+      font-size: clamp(2rem, 5vw, 3.2rem);
+      font-weight: 600;
+      line-height: 1.1;
+      color: var(--deep);
+    }
+    .section-title em {
+      font-style: italic;
+      color: var(--teal);
+    }
+
+    /* ─── HEADER ─────────────────────────────────────────────────────── */
+    header {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      background: rgba(10, 35, 24, 0.92);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border-bottom: 1px solid rgba(78, 201, 165, 0.12);
+      transition: box-shadow var(--transition);
+    }
+    header.scrolled { box-shadow: 0 4px 40px rgba(0,0,0,0.25); }
+    .nav-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 68px;
+    }
+    .logo {
+      font-family: var(--display);
+      font-size: 1.55rem;
+      font-weight: 600;
+      color: var(--white);
+      letter-spacing: -0.01em;
+    }
+    .logo span {
+      color: var(--aqua);
+      font-style: italic;
+    }
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 2rem;
+    }
+    .nav-links a {
+      font-size: 0.82rem;
+      font-weight: 400;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.7);
+      transition: color var(--transition);
+      position: relative;
+    }
+    .nav-links a::after {
+      content: '';
+      position: absolute;
+      left: 0; bottom: -4px;
+      width: 0; height: 1px;
+      background: var(--aqua);
+      transition: width var(--transition);
+    }
+    .nav-links a:hover { color: var(--aqua); }
+    .nav-links a:hover::after { width: 100%; }
+    .nav-cta {
+      background: var(--teal);
+      color: var(--white) !important;
+      padding: 0.5rem 1.2rem;
+      border-radius: 50px;
+      font-weight: 500 !important;
+      transition: background var(--transition), transform var(--transition) !important;
+    }
+    .nav-cta:hover { background: var(--aqua) !important; transform: translateY(-1px); }
+    .nav-cta::after { display: none !important; }
+
+    /* Hamburger */
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      cursor: pointer;
+      padding: 4px;
+      background: none;
+      border: none;
+    }
+    .hamburger span {
+      display: block;
+      width: 24px;
+      height: 2px;
+      background: var(--white);
+      border-radius: 2px;
+      transition: var(--transition);
+    }
+    .hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .hamburger.open span:nth-child(2) { opacity: 0; }
+    .hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+    @media (max-width: 768px) {
+      .hamburger { display: flex; }
+      .nav-links {
+        position: fixed;
+        top: 68px; left: 0; right: 0;
+        background: var(--deep);
+        flex-direction: column;
+        gap: 0;
+        padding: 0;
+        max-height: 0;
+        overflow: hidden;
+        transition: max-height 0.4s ease, padding 0.3s ease;
+      }
+      .nav-links.open {
+        max-height: 400px;
+        padding: 1.5rem 0;
+      }
+      .nav-links a {
+        padding: 0.9rem 2rem;
+        width: 100%;
+        border-bottom: 1px solid rgba(255,255,255,0.06);
+      }
+      .nav-cta { margin: 1rem 2rem; width: calc(100% - 4rem); text-align: center; }
+    }
+
+    /* ─── HERO ───────────────────────────────────────────────────────── */
+    .hero {
+      position: relative;
+      min-height: 100svh;
+      display: flex;
+      align-items: flex-end;
+      padding-bottom: 8vh;
+      overflow: hidden;
+    }
+    .hero-bg {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+      filter: brightness(0.5) saturate(1.2);
+      transition: transform 0.1s linear;
+    }
+    /* Caustic light overlay — the signature element */
+    .hero-caustic {
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 60% 40% at 30% 20%, rgba(78,201,165,0.18) 0%, transparent 70%),
+        radial-gradient(ellipse 40% 60% at 75% 50%, rgba(45,140,110,0.14) 0%, transparent 65%),
+        linear-gradient(180deg, rgba(10,35,24,0.2) 0%, rgba(10,35,24,0.7) 100%);
+      pointer-events: none;
+    }
+    /* Animated caustics */
+    @keyframes caustic-drift {
+      0%   { transform: translate(0,0) scale(1); }
+      33%  { transform: translate(3%,2%) scale(1.04); }
+      66%  { transform: translate(-2%,4%) scale(0.97); }
+      100% { transform: translate(0,0) scale(1); }
+    }
+    .hero-caustic-anim {
+      position: absolute;
+      inset: -10%;
+      background:
+        radial-gradient(ellipse 35% 25% at 55% 35%, rgba(78,201,165,0.12) 0%, transparent 60%),
+        radial-gradient(ellipse 25% 35% at 20% 65%, rgba(45,140,110,0.1) 0%, transparent 55%);
+      animation: caustic-drift 12s ease-in-out infinite;
+      pointer-events: none;
+    }
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      max-width: 760px;
+    }
+    .hero-eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.6rem;
+      font-size: 0.72rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--aqua);
+      margin-bottom: 1.5rem;
+    }
+    .hero-eyebrow::before {
+      content: '';
+      display: block;
+      width: 32px;
+      height: 1px;
+      background: var(--aqua);
+    }
+    .hero-title {
+      font-family: var(--display);
+      font-size: clamp(3rem, 8vw, 6.5rem);
+      font-weight: 600;
+      line-height: 1.0;
+      color: var(--white);
+      margin-bottom: 1.5rem;
+    }
+    .hero-title em {
+      font-style: italic;
+      color: var(--aqua);
+    }
+    .hero-desc {
+      font-size: clamp(0.95rem, 2vw, 1.1rem);
+      line-height: 1.75;
+      color: rgba(255,255,255,0.75);
+      max-width: 520px;
+      margin-bottom: 2.5rem;
+    }
+    .hero-actions {
+      display: flex;
+      align-items: center;
+      gap: 1.25rem;
+      flex-wrap: wrap;
+    }
+    .btn-primary {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.6rem;
+      background: var(--teal);
+      color: var(--white);
+      font-family: var(--body);
+      font-size: 0.88rem;
+      font-weight: 500;
+      letter-spacing: 0.05em;
+      padding: 0.9rem 2rem;
+      border-radius: 50px;
+      border: none;
+      cursor: pointer;
+      transition: background var(--transition), transform var(--transition), box-shadow var(--transition);
+    }
+    .btn-primary:hover {
+      background: var(--aqua);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 32px rgba(78,201,165,0.35);
+    }
+    .btn-ghost {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      color: rgba(255,255,255,0.8);
+      font-size: 0.88rem;
+      font-weight: 400;
+      border-bottom: 1px solid rgba(255,255,255,0.3);
+      padding-bottom: 2px;
+      transition: color var(--transition), border-color var(--transition);
+    }
+    .btn-ghost:hover { color: var(--aqua); border-color: var(--aqua); }
+    /* Scroll indicator */
+    .hero-scroll {
+      position: absolute;
+      bottom: 2.5rem;
+      right: 2rem;
+      z-index: 3;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.4rem;
+      color: rgba(255,255,255,0.45);
+      font-size: 0.65rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+    }
+    @keyframes scroll-line { 0%{transform:scaleY(0);transform-origin:top} 50%{transform:scaleY(1);transform-origin:top} 51%{transform:scaleY(1);transform-origin:bottom} 100%{transform:scaleY(0);transform-origin:bottom} }
+    .hero-scroll-line {
+      width: 1px;
+      height: 48px;
+      background: rgba(255,255,255,0.3);
+      animation: scroll-line 2.2s ease-in-out infinite;
+    }
+    @media (max-width: 600px) {
+      .hero-scroll { display: none; }
+      .hero { padding-bottom: 6vh; }
+    }
+
+    /* ─── SOBRE NOSOTROS ─────────────────────────────────────────────── */
+    .about {
+      padding: 7rem 0 6rem;
+      background: var(--white);
+      position: relative;
+      overflow: hidden;
+    }
+    .about::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 4px;
+      background: linear-gradient(90deg, var(--teal), var(--aqua), transparent);
+    }
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 5rem;
+      align-items: center;
+    }
+    .about-copy p {
+      font-size: 1.05rem;
+      line-height: 1.85;
+      color: #3a4a44;
+      margin-top: 1.25rem;
+    }
+    .about-copy p + p { margin-top: 0.9rem; }
+    .about-stats {
+      display: flex;
+      gap: 2.5rem;
+      margin-top: 2.5rem;
+      padding-top: 2rem;
+      border-top: 1px solid var(--mist);
+    }
+    .stat-num {
+      font-family: var(--display);
+      font-size: 2.6rem;
+      font-weight: 600;
+      color: var(--teal);
+      line-height: 1;
+    }
+    .stat-label {
+      font-size: 0.78rem;
+      color: #7a9a8e;
+      margin-top: 0.3rem;
+      letter-spacing: 0.05em;
+    }
+    .about-visual {
+      position: relative;
+    }
+    .about-img-wrap {
+      width: 100%;
+      height: 460px;
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+    }
+    .about-img-wrap img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.8s ease;
+    }
+    .about-img-wrap:hover img { transform: scale(1.04); }
+    .about-badge {
+      position: absolute;
+      bottom: -1.5rem;
+      left: -1.5rem;
+      background: var(--deep);
+      color: var(--white);
+      padding: 1.2rem 1.5rem;
+      border-radius: var(--radius-md);
+      box-shadow: 0 12px 40px rgba(0,0,0,0.25);
+    }
+    .about-badge strong {
+      font-family: var(--display);
+      font-size: 2rem;
+      font-weight: 600;
+      color: var(--aqua);
+      display: block;
+      line-height: 1;
+    }
+    .about-badge span {
+      font-size: 0.75rem;
+      color: rgba(255,255,255,0.65);
+      letter-spacing: 0.06em;
+    }
+    @media (max-width: 900px) {
+      .about-grid { grid-template-columns: 1fr; gap: 3rem; }
+      .about-visual { order: -1; }
+      .about-img-wrap { height: 320px; }
+      .about-badge { left: 1rem; bottom: -1rem; }
+    }
+
+    /* ─── SERVICIOS ──────────────────────────────────────────────────── */
+    .services {
+      padding: 7rem 0;
+      background: var(--cream);
+    }
+    .services-header {
+      text-align: center;
+      margin-bottom: 4rem;
+    }
+    .services-header .section-title { margin-top: 0.5rem; }
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.75rem;
+    }
+    .service-card {
+      background: var(--white);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      box-shadow: 0 2px 16px rgba(13,26,20,0.06);
+      transition: transform var(--transition), box-shadow var(--transition);
+      display: flex;
+      flex-direction: column;
+    }
+    .service-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 16px 48px rgba(13,26,20,0.12);
+    }
+    .card-img-wrap {
+      width: 100%;
+      height: 240px;
+      overflow: hidden;
+      background: var(--mist);
+    }
+    .card-img-wrap img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.6s ease;
+    }
+    .service-card:hover .card-img-wrap img { transform: scale(1.07); }
+    .card-body {
+      padding: 1.75rem;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+    .card-icon {
+      font-size: 1.6rem;
+      margin-bottom: 0.75rem;
+      line-height: 1;
+    }
+    .card-title {
+      font-family: var(--display);
+      font-size: 1.45rem;
+      font-weight: 600;
+      color: var(--deep);
+      margin-bottom: 0.75rem;
+      line-height: 1.2;
+    }
+    .card-text {
+      font-size: 0.9rem;
+      line-height: 1.75;
+      color: #5a7a6e;
+      flex: 1;
+    }
+    .card-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+      margin-top: 1.25rem;
+    }
+    .tag {
+      font-size: 0.7rem;
+      font-weight: 500;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      background: var(--mist);
+      color: var(--teal);
+      padding: 0.3rem 0.75rem;
+      border-radius: 50px;
+    }
+    @media (max-width: 900px) {
+      .services-grid { grid-template-columns: 1fr 1fr; }
+      .services-grid .service-card:last-child {
+        grid-column: 1 / -1;
+        max-width: 420px;
+        margin: 0 auto;
+        width: 100%;
+      }
+    }
+    @media (max-width: 600px) {
+      .services-grid { grid-template-columns: 1fr; }
+      .services-grid .service-card:last-child {
+        grid-column: auto;
+        max-width: none;
+      }
+      .card-img-wrap { height: 200px; }
+    }
+
+    /* ─── TESTIMONIOS ────────────────────────────────────────────────── */
+    .testimonials {
+      padding: 7rem 0;
+      background: var(--deep);
+      position: relative;
+      overflow: hidden;
+    }
+    .testimonials::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 60% 60% at 10% 80%, rgba(45,140,110,0.15) 0%, transparent 70%),
+        radial-gradient(ellipse 50% 50% at 90% 20%, rgba(78,201,165,0.08) 0%, transparent 60%);
+      pointer-events: none;
+    }
+    .testimonials .section-label { color: var(--aqua); }
+    .testimonials .section-title { color: var(--white); }
+    .testimonials-header {
+      text-align: center;
+      margin-bottom: 4rem;
+    }
+    .testimonials-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+    }
+    .testi-card {
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(78,201,165,0.12);
+      border-radius: var(--radius-lg);
+      padding: 2rem;
+      transition: background var(--transition), border-color var(--transition), transform var(--transition);
+      position: relative;
+    }
+    .testi-card:hover {
+      background: rgba(255,255,255,0.08);
+      border-color: rgba(78,201,165,0.3);
+      transform: translateY(-4px);
+    }
+    .testi-quote {
+      font-family: var(--display);
+      font-size: 4rem;
+      line-height: 0.6;
+      color: var(--teal);
+      margin-bottom: 1rem;
+      opacity: 0.6;
+    }
+    .testi-text {
+      font-size: 0.95rem;
+      line-height: 1.8;
+      color: rgba(255,255,255,0.72);
+      margin-bottom: 1.75rem;
+      font-style: italic;
+    }
+    .testi-stars {
+      font-size: 0.85rem;
+      color: var(--gold);
+      letter-spacing: 0.1em;
+      margin-bottom: 1rem;
+    }
+    .testi-author {
+      display: flex;
+      align-items: center;
+      gap: 0.9rem;
+      border-top: 1px solid rgba(255,255,255,0.08);
+      padding-top: 1.25rem;
+    }
+    .testi-avatar {
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      background: var(--teal);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--display);
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: var(--white);
+      flex-shrink: 0;
+    }
+    .testi-name {
+      font-size: 0.9rem;
+      font-weight: 500;
+      color: var(--white);
+    }
+    .testi-role {
+      font-size: 0.76rem;
+      color: rgba(255,255,255,0.45);
+      margin-top: 0.15rem;
+    }
+    @media (max-width: 900px) {
+      .testimonials-grid { grid-template-columns: 1fr 1fr; }
+      .testimonials-grid .testi-card:last-child {
+        grid-column: 1 / -1;
+        max-width: 480px;
+        margin: 0 auto;
+        width: 100%;
+      }
+    }
+    @media (max-width: 600px) {
+      .testimonials-grid { grid-template-columns: 1fr; }
+      .testimonials-grid .testi-card:last-child {
+        grid-column: auto;
+        max-width: none;
+      }
+    }
+
+    /* ─── CONTACTO ───────────────────────────────────────────────────── */
+    .contact {
+      padding: 7rem 0;
+      background: var(--white);
+    }
+    .contact-grid {
+      display: grid;
+      grid-template-columns: 1fr 1.3fr;
+      gap: 5rem;
+      align-items: start;
+    }
+    .contact-info p {
+      font-size: 1rem;
+      line-height: 1.8;
+      color: #5a7a6e;
+      margin-top: 1rem;
+    }
+    .contact-details {
+      margin-top: 2.5rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1.25rem;
+    }
+    .contact-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.9rem;
+    }
+    .contact-item-icon {
+      width: 38px;
+      height: 38px;
+      background: var(--mist);
+      border-radius: var(--radius-sm);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1rem;
+      flex-shrink: 0;
+      margin-top: 0.1rem;
+    }
+    .contact-item-text strong {
+      display: block;
+      font-size: 0.82rem;
+      font-weight: 500;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--teal);
+      margin-bottom: 0.2rem;
+    }
+    .contact-item-text span {
+      font-size: 0.9rem;
+      color: #4a6a5e;
+    }
+    /* Form */
+    .contact-form {
+      background: var(--cream);
+      padding: 2.5rem;
+      border-radius: var(--radius-lg);
+    }
+    .form-group { margin-bottom: 1.25rem; }
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.25rem;
+      margin-bottom: 1.25rem;
+    }
+    label {
+      display: block;
+      font-size: 0.78rem;
+      font-weight: 500;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--mid);
+      margin-bottom: 0.45rem;
+    }
+    input, select, textarea {
+      width: 100%;
+      padding: 0.8rem 1rem;
+      background: var(--white);
+      border: 1.5px solid rgba(45,140,110,0.2);
+      border-radius: var(--radius-sm);
+      font-family: var(--body);
+      font-size: 0.9rem;
+      color: var(--ink);
+      transition: border-color var(--transition), box-shadow var(--transition);
+      outline: none;
+    }
+    input::placeholder, textarea::placeholder { color: #aac4ba; }
+    input:focus, select:focus, textarea:focus {
+      border-color: var(--teal);
+      box-shadow: 0 0 0 3px rgba(78,201,165,0.12);
+    }
+    textarea { resize: vertical; min-height: 110px; }
+    select { cursor: pointer; appearance: none; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%232d8c6e' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 1rem center; }
+    .form-check {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.7rem;
+      font-size: 0.82rem;
+      color: #7a9a8e;
+      margin-bottom: 1.5rem;
+    }
+    .form-check input[type="checkbox"] {
+      width: 16px;
+      height: 16px;
+      min-width: 16px;
+      margin-top: 1px;
+      accent-color: var(--teal);
+    }
+    .btn-submit {
+      width: 100%;
+      background: var(--deep);
+      color: var(--white);
+      font-family: var(--body);
+      font-size: 0.9rem;
+      font-weight: 500;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 1rem;
+      border: none;
+      border-radius: var(--radius-sm);
+      cursor: pointer;
+      transition: background var(--transition), transform var(--transition);
+    }
+    .btn-submit:hover {
+      background: var(--teal);
+      transform: translateY(-1px);
+    }
+    @media (max-width: 900px) {
+      .contact-grid { grid-template-columns: 1fr; gap: 3rem; }
+      .form-row { grid-template-columns: 1fr; }
+    }
+
+    /* ─── FOOTER ─────────────────────────────────────────────────────── */
+    footer {
+      background: var(--ink);
+      padding: 5rem 0 2.5rem;
+      color: rgba(255,255,255,0.6);
+    }
+    .footer-grid {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr 1fr;
+      gap: 3rem;
+      padding-bottom: 3rem;
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+    }
+    .footer-brand .logo { font-size: 1.4rem; color: var(--white); margin-bottom: 1rem; }
+    .footer-brand p {
+      font-size: 0.88rem;
+      line-height: 1.75;
+      color: rgba(255,255,255,0.5);
+      max-width: 260px;
+    }
+    .footer-socials {
+      display: flex;
+      gap: 0.75rem;
+      margin-top: 1.5rem;
+    }
+    .social-link {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      border: 1px solid rgba(255,255,255,0.15);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.85rem;
+      color: rgba(255,255,255,0.6);
+      transition: background var(--transition), border-color var(--transition), color var(--transition);
+    }
+    .social-link:hover {
+      background: var(--teal);
+      border-color: var(--teal);
+      color: var(--white);
+    }
+    .footer-col h4 {
+      font-size: 0.75rem;
+      font-weight: 500;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--white);
+      margin-bottom: 1.25rem;
+    }
+    .footer-col ul li { margin-bottom: 0.65rem; }
+    .footer-col ul a {
+      font-size: 0.88rem;
+      color: rgba(255,255,255,0.5);
+      transition: color var(--transition);
+    }
+    .footer-col ul a:hover { color: var(--aqua); }
+    .footer-bottom {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-top: 2rem;
+      font-size: 0.8rem;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+    .footer-legal {
+      display: flex;
+      gap: 1.5rem;
+    }
+    .footer-legal a {
+      color: rgba(255,255,255,0.35);
+      transition: color var(--transition);
+    }
+    .footer-legal a:hover { color: var(--aqua); }
+    @media (max-width: 900px) {
+      .footer-grid { grid-template-columns: 1fr 1fr; }
+      .footer-brand { grid-column: 1 / -1; }
+    }
+    @media (max-width: 500px) {
+      .footer-grid { grid-template-columns: 1fr; }
+      .footer-bottom { flex-direction: column; text-align: center; }
+    }
+
+    /* ─── ANIMATIONS (scroll reveal) ────────────────────────────────── */
+    .reveal {
+      opacity: 0;
+      transform: translateY(28px);
+      transition: opacity 0.65s ease, transform 0.65s ease;
+    }
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    .reveal-delay-1 { transition-delay: 0.1s; }
+    .reveal-delay-2 { transition-delay: 0.2s; }
+    .reveal-delay-3 { transition-delay: 0.3s; }
+
+    @media (prefers-reduced-motion: reduce) {
+      .reveal { opacity: 1; transform: none; transition: none; }
+      .hero-caustic-anim { animation: none; }
+      .hero-scroll-line { animation: none; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ─── HEADER ──────────────────────────────────────────────────────── -->
+  <header id="site-header">
+    <div class="container nav-inner">
+      <a href="#" class="logo">Aqua<span>Verde</span></a>
+      <nav>
+        <ul class="nav-links" id="nav-links">
+          <li><a href="#nosotros">Nosotros</a></li>
+          <li><a href="#servicios">Servicios</a></li>
+          <li><a href="#testimonios">Reseñas</a></li>
+          <li><a href="#contacto" class="nav-cta">Consultar</a></li>
+        </ul>
+      </nav>
+      <button class="hamburger" id="hamburger" aria-label="Menú" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </header>
+
+  <main>
+
+    <!-- ─── HERO ───────────────────────────────────────────────────────── -->
+    <section class="hero" id="inicio">
+      <img
+        class="hero-bg"
+        src="https://h.hannainst.com.mx/wp-content/uploads/Paisajismo-acua%CC%81tico-600x232.png"
+        alt="Acuario paisajístico con plantas y peces tropicales"
+        onerror="this.src='https://images.unsplash.com/photo-1583212292454-1fe6229603b7?w=1600&q=80'"
+      />
+      <div class="hero-caustic"></div>
+      <div class="hero-caustic-anim"></div>
+      <div class="container">
+        <div class="hero-content">
+          <span class="hero-eyebrow">Paisajismo Acuático de Autor</span>
+          <h1 class="hero-title">
+            Mundos vivos<br />bajo el <em>agua.</em>
+          </h1>
+          <p class="hero-desc">
+            Diseñamos y equipamos acuarios que son obras de arte en movimiento. Desde discus imperiales hasta jardines koi, llevamos el ecosistema perfecto a tu hogar o negocio.
+          </p>
+          <div class="hero-actions">
+            <a href="#contacto" class="btn-primary">
+              Diseñar mi acuario
+              <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 7h10M8 3l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </a>
+            <a href="#servicios" class="btn-ghost">
+              Ver servicios
+              <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M6 1v10M1 6l5 5 5-5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </a>
+          </div>
+        </div>
+      </div>
+      <div class="hero-scroll">
+        <div class="hero-scroll-line"></div>
+        <span>scroll</span>
+      </div>
+    </section>
+
+    <!-- ─── SOBRE NOSOTROS ─────────────────────────────────────────────── -->
+    <section class="about" id="nosotros">
+      <div class="container">
+        <div class="about-grid">
+          <div class="about-copy reveal">
+            <span class="section-label">Nuestra Historia</span>
+            <h2 class="section-title">Pasión que<br /><em>nació bajo el agua</em></h2>
+            <p>
+              AquaVerde nació de una obsesión: recrear en casa la misma magia silenciosa de los ríos amazónicos y los estanques japoneses. Más de una década de experiencia nos convierte en el puente entre la naturaleza acuática y tu espacio interior.
+            </p>
+            <p>
+              Combinamos biología acuática, diseño de interiores y tecnología de filtración para crear ecosistemas vivos y autosustentables. Cada proyecto es único —porque cada pez, cada planta y cada cliente tiene una historia diferente que contar.
+            </p>
+            <div class="about-stats">
+              <div>
+                <div class="stat-num">+850</div>
+                <div class="stat-label">Acuarios instalados</div>
+              </div>
+              <div>
+                <div class="stat-num">12 a</div>
+                <div class="stat-label">Años de experiencia</div>
+              </div>
+              <div>
+                <div class="stat-num">98%</div>
+                <div class="stat-label">Clientes satisfechos</div>
+              </div>
+            </div>
+          </div>
+          <div class="about-visual reveal reveal-delay-2">
+            <div class="about-img-wrap">
+              <img
+                src="https://cdn0.expertoanimal.com/es/posts/5/3/4/escalar_panda_27435_4_600.webp"
+                alt="Escalar panda en acuario plantado"
+                onerror="this.src='https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=800&q=80'"
+              />
+            </div>
+            <div class="about-badge">
+              <strong>N°1</strong>
+              <span>En paisajismo acuático</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ─── SERVICIOS ──────────────────────────────────────────────────── -->
+    <section class="services" id="servicios">
+      <div class="container">
+        <div class="services-header reveal">
+          <span class="section-label">Lo que hacemos</span>
+          <h2 class="section-title">Tres mundos.<br /><em>Un solo ecosistema.</em></h2>
+        </div>
+        <div class="services-grid">
+
+          <!-- Columna 1: Peces Tropicales -->
+          <article class="service-card reveal reveal-delay-1">
+            <div class="card-img-wrap">
+              <img
+                src="https://cdn.shopify.com/s/files/1/0311/3149/files/shutterstock_96677104.jpg?v=1584639688"
+                alt="Peces discus tropicales"
+                onerror="this.src='https://images.unsplash.com/photo-1520300555580-bb5e07da5fb2?w=800&q=80'"
+              />
+            </div>
+            <div class="card-body">
+              <div class="card-icon">🐠</div>
+              <h3 class="card-title">Peces Tropicales</h3>
+              <p class="card-text">
+                Discus reales, escalares panda, neones y más. Seleccionamos y aclimatamos cada ejemplar con protocolos veterinarios para garantizar su salud y longevidad en tu acuario.
+              </p>
+              <div class="card-tags">
+                <span class="tag">Discus</span>
+                <span class="tag">Escalares</span>
+                <span class="tag">Neones</span>
+                <span class="tag">Cuarentena</span>
+              </div>
+            </div>
+          </article>
+
+          <!-- Columna 2: Paisajismo Acuático -->
+          <article class="service-card reveal reveal-delay-2">
+            <div class="card-img-wrap">
+              <img
+                src="https://cdn0.expertoanimal.com/es/posts/5/3/4/escalar_panda_27435_4_600.webp"
+                alt="Paisajismo con plantas acuáticas y rocas"
+                onerror="this.src='https://images.unsplash.com/photo-1610547189313-1fbea2dcd059?w=800&q=80'"
+              />
+            </div>
+            <div class="card-body">
+              <div class="card-icon">🌿</div>
+              <h3 class="card-title">Paisajismo Acuático</h3>
+              <p class="card-text">
+                Diseño Iwagumi, estilo holandés, bosque de raíces: creamos escapes visuales dentro del vidrio usando plantas vivas, sustrato activo y CO₂ inyectado de forma controlada.
+              </p>
+              <div class="card-tags">
+                <span class="tag">Plantas vivas</span>
+                <span class="tag">CO₂</span>
+                <span class="tag">Iwagumi</span>
+                <span class="tag">Diseño a medida</span>
+              </div>
+            </div>
+          </article>
+
+          <!-- Columna 3: Equipamiento y Kois -->
+          <article class="service-card reveal reveal-delay-3">
+            <div class="card-img-wrap">
+              <img
+                src="https://muyinteresante.okdiario.com/wp-content/uploads/sites/5/2022/10/13/6347fb6714174.jpeg"
+                alt="Kois en estanque japonés"
+                onerror="this.src='https://images.unsplash.com/photo-1567306226416-28f0efdc88ce?w=800&q=80'"
+              />
+            </div>
+            <div class="card-body">
+              <div class="card-icon">🎏</div>
+              <h3 class="card-title">Equipamiento & Kois</h3>
+              <p class="card-text">
+                Filtros de cámara, UV de alta potencia, bombas de bajo consumo y estanques a medida para kois campeonas. Asesoramos desde el proyecto hasta el mantenimiento mensual.
+              </p>
+              <div class="card-tags">
+                <span class="tag">Koi Kohaku</span>
+                <span class="tag">Estanques</span>
+                <span class="tag">Filtración UV</span>
+                <span class="tag">Mantenimiento</span>
+              </div>
+            </div>
+          </article>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ─── TESTIMONIOS ────────────────────────────────────────────────── -->
+    <section class="testimonials" id="testimonios">
+      <div class="container">
+        <div class="testimonials-header reveal">
+          <span class="section-label">Clientes que confían</span>
+          <h2 class="section-title" style="color:var(--white)">Lo que dicen<br /><em>nuestros acuaristas</em></h2>
+        </div>
+        <div class="testimonials-grid">
+
+          <div class="testi-card reveal reveal-delay-1">
+            <div class="testi-quote">"</div>
+            <p class="testi-text">AquaVerde transformó por completo el lobby de mi clínica. El acuario plantado que diseñaron calmó tanto a mis pacientes que redujo notablemente el tiempo de espera percibido. ¡Una inversión que vale cada peso!</p>
+            <div class="testi-stars">★★★★★</div>
+            <div class="testi-author">
+              <div class="testi-avatar">MR</div>
+              <div>
+                <div class="testi-name">Dra. Marcela Rivas</div>
+                <div class="testi-role">Odontóloga — Buenos Aires</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="testi-card reveal reveal-delay-2">
+            <div class="testi-quote">"</div>
+            <p class="testi-text">Compré mis primeros discus con ellos y el asesoramiento pre y post-venta fue impecable. Me explicaron desde la química del agua hasta la alimentación. Mis discus llevan 2 años en perfecta salud.</p>
+            <div class="testi-stars">★★★★★</div>
+            <div class="testi-author">
+              <div class="testi-avatar">JP</div>
+              <div>
+                <div class="testi-name">Juan Pablo Orozco</div>
+                <div class="testi-role">Acuarista entusiasta — Córdoba</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="testi-card reveal reveal-delay-3">
+            <div class="testi-quote">"</div>
+            <p class="testi-text">El estanque de kois que construyeron en mi jardín es la pieza central del espacio. Funciona solo, el agua siempre cristalina, y las kois crecen de maravilla. El equipo de mantenimiento es puntual y profesional.</p>
+            <div class="testi-stars">★★★★★</div>
+            <div class="testi-author">
+              <div class="testi-avatar">LS</div>
+              <div>
+                <div class="testi-name">Luciana Soto</div>
+                <div class="testi-role">Arquitecta de interiores — Mendoza</div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ─── CONTACTO ───────────────────────────────────────────────────── -->
+    <section class="contact" id="contacto">
+      <div class="container">
+        <div class="contact-grid">
+          <div class="contact-info reveal">
+            <span class="section-label">Hablemos</span>
+            <h2 class="section-title">Tu acuario<br />ideal empieza<br /><em>con una idea</em></h2>
+            <p>Contanos tu visión: el espacio, el estilo, el presupuesto. Nuestros asesores te responden en menos de 24 horas con una propuesta sin compromiso.</p>
+            <div class="contact-details">
+              <div class="contact-item">
+                <div class="contact-item-icon">📍</div>
+                <div class="contact-item-text">
+                  <strong>Visítanos</strong>
+                  <span>Av. Corrientes 3241, CABA</span>
+                </div>
+              </div>
+              <div class="contact-item">
+                <div class="contact-item-icon">📞</div>
+                <div class="contact-item-text">
+                  <strong>Teléfono</strong>
+                  <span>+54 11 4567-8900</span>
+                </div>
+              </div>
+              <div class="contact-item">
+                <div class="contact-item-icon">✉️</div>
+                <div class="contact-item-text">
+                  <strong>Email</strong>
+                  <span>hola@aquaverde.com.ar</span>
+                </div>
+              </div>
+              <div class="contact-item">
+                <div class="contact-item-icon">🕐</div>
+                <div class="contact-item-text">
+                  <strong>Horario</strong>
+                  <span>Lun–Sáb: 10:00–19:00 hs</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="contact-form reveal reveal-delay-2">
+            <div class="form-row">
+              <div>
+                <label for="nombre">Nombre</label>
+                <input type="text" id="nombre" name="nombre" placeholder="Tu nombre" />
+              </div>
+              <div>
+                <label for="email">Email</label>
+                <input type="email" id="email" name="email" placeholder="tu@email.com" />
+              </div>
+            </div>
+            <div class="form-row">
+              <div>
+                <label for="telefono">Teléfono</label>
+                <input type="tel" id="telefono" name="telefono" placeholder="+54 11 ..." />
+              </div>
+              <div>
+                <label for="servicio">Servicio de interés</label>
+                <select id="servicio" name="servicio">
+                  <option value="" disabled selected>Seleccionar...</option>
+                  <option>Acuario plantado</option>
+                  <option>Peces tropicales</option>
+                  <option>Estanque de kois</option>
+                  <option>Mantenimiento mensual</option>
+                  <option>Consulta técnica</option>
+                </select>
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="mensaje">Contanos tu proyecto</label>
+              <textarea id="mensaje" name="mensaje" placeholder="Describí el espacio, las dimensiones aproximadas, o cualquier idea que tengas en mente..."></textarea>
+            </div>
+            <div class="form-check">
+              <input type="checkbox" id="privacy" name="privacy" />
+              <label for="privacy" style="text-transform:none;letter-spacing:0;font-size:0.82rem;color:#7a9a8e;font-weight:300;margin-bottom:0">Acepto la política de privacidad y autorizo el uso de mis datos para recibir la propuesta.</label>
+            </div>
+            <button type="button" class="btn-submit">Enviar consulta</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ─── FOOTER ─────────────────────────────────────────────────────── -->
+  <footer>
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <div class="logo">Aqua<span>Verde</span></div>
+          <p>Especialistas en paisajismo acuático, peces tropicales y estanques de kois. Creamos ecosistemas vivos desde 2013.</p>
+          <div class="footer-socials">
+            <a href="#" class="social-link" aria-label="Instagram">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg>
+            </a>
+            <a href="#" class="social-link" aria-label="Facebook">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
+            </a>
+            <a href="#" class="social-link" aria-label="YouTube">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.95-1.97C18.88 4 12 4 12 4s-6.88 0-8.59.45A2.78 2.78 0 0 0 1.46 6.42 29 29 0 0 0 1 12a29 29 0 0 0 .46 5.58 2.78 2.78 0 0 0 1.95 1.97C5.12 20 12 20 12 20s6.88 0 8.59-.45a2.78 2.78 0 0 0 1.96-1.97A29 29 0 0 0 23 12a29 29 0 0 0-.46-5.58z"/><polygon points="9.75 15.02 15.5 12 9.75 8.98 9.75 15.02" stroke="currentColor" fill="none"/></svg>
+            </a>
+            <a href="#" class="social-link" aria-label="WhatsApp">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
+            </a>
+          </div>
+        </div>
+        <div class="footer-col">
+          <h4>Servicios</h4>
+          <ul>
+            <li><a href="#servicios">Acuarios plantados</a></li>
+            <li><a href="#servicios">Peces tropicales</a></li>
+            <li><a href="#servicios">Estanques koi</a></li>
+            <li><a href="#contacto">Mantenimiento</a></li>
+            <li><a href="#contacto">Consultoría</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Empresa</h4>
+          <ul>
+            <li><a href="#nosotros">Sobre nosotros</a></li>
+            <li><a href="#testimonios">Reseñas</a></li>
+            <li><a href="#">Proyectos</a></li>
+            <li><a href="#">Blog acuarístico</a></li>
+            <li><a href="#contacto">Contacto</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Legal</h4>
+          <ul>
+            <li><a href="#">Política de privacidad</a></li>
+            <li><a href="#">Términos de uso</a></li>
+            <li><a href="#">Garantías</a></li>
+            <li><a href="#">Envíos y devoluciones</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <span>© 2025 AquaVerde. Todos los derechos reservados.</span>
+        <div class="footer-legal">
+          <a href="#">Privacidad</a>
+          <a href="#">Términos</a>
+          <a href="#">Cookies</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // ─── Sticky header shadow on scroll ────────────────────────────────
+    const header = document.getElementById('site-header');
+    window.addEventListener('scroll', () => {
+      header.classList.toggle('scrolled', window.scrollY > 20);
+    }, { passive: true });
+
+    // ─── Hamburger menu ─────────────────────────────────────────────────
+    const hamburger = document.getElementById('hamburger');
+    const navLinks  = document.getElementById('nav-links');
+    hamburger.addEventListener('click', () => {
+      const open = navLinks.classList.toggle('open');
+      hamburger.classList.toggle('open', open);
+      hamburger.setAttribute('aria-expanded', String(open));
+    });
+    navLinks.querySelectorAll('a').forEach(link => {
+      link.addEventListener('click', () => {
+        navLinks.classList.remove('open');
+        hamburger.classList.remove('open');
+        hamburger.setAttribute('aria-expanded', 'false');
+      });
+    });
+
+    // ─── Scroll reveal ──────────────────────────────────────────────────
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.12 });
+
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+    // ─── Subtle parallax on hero bg ─────────────────────────────────────
+    const heroBg = document.querySelector('.hero-bg');
+    if (heroBg && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      window.addEventListener('scroll', () => {
+        const y = window.scrollY;
+        if (y < window.innerHeight) {
+          heroBg.style.transform = `translateY(${y * 0.3}px) scale(1.05)`;
+        }
+      }, { passive: true });
+    }
+
+    // ─── Form submit (visual feedback only) ─────────────────────────────
+    document.querySelector('.btn-submit').addEventListener('click', function() {
+      const nombre = document.getElementById('nombre').value.trim();
+      const email  = document.getElementById('email').value.trim();
+      if (!nombre || !email) {
+        this.style.background = '#c0392b';
+        this.textContent = 'Completá nombre y email';
+        setTimeout(() => {
+          this.style.background = '';
+          this.textContent = 'Enviar consulta';
+        }, 2500);
+        return;
+      }
+      this.style.background = 'var(--teal)';
+      this.textContent = '✓ Consulta enviada — Te respondemos en 24 hs';
+      this.disabled = true;
+    });
+  </script>
+</body>
+</html>
