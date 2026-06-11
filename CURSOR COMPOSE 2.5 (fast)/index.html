@@ -1,0 +1,1233 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Tienda y consultora especializada en acuariofilia, paisajismo acuático, plantas y peces tropicales como discus, escalares y kois.">
+  <title>AquaVida — Acuariofilia & Paisajismo Acuático</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+  <style>
+    /* ── Variables ── */
+    :root {
+      --color-deep: #0a1628;
+      --color-ocean: #0d4f6e;
+      --color-teal: #1a8a8a;
+      --color-aqua: #3ecfcf;
+      --color-coral: #ff6b4a;
+      --color-sand: #f4f7f9;
+      --color-white: #ffffff;
+      --color-text: #2c3e50;
+      --color-muted: #6b7c8a;
+      --color-border: rgba(26, 138, 138, 0.15);
+      --shadow-sm: 0 2px 8px rgba(10, 22, 40, 0.08);
+      --shadow-md: 0 8px 32px rgba(10, 22, 40, 0.12);
+      --shadow-lg: 0 16px 48px rgba(10, 22, 40, 0.18);
+      --radius: 12px;
+      --radius-lg: 20px;
+      --transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      --header-height: 72px;
+      --font-body: 'Outfit', system-ui, sans-serif;
+      --font-display: 'Playfair Display', Georgia, serif;
+    }
+
+    /* ── Reset & Base ── */
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+      scroll-padding-top: var(--header-height);
+    }
+
+    body {
+      font-family: var(--font-body);
+      font-size: 1rem;
+      line-height: 1.6;
+      color: var(--color-text);
+      background-color: var(--color-sand);
+      overflow-x: hidden;
+    }
+
+    img {
+      display: block;
+      width: 100%;
+      object-fit: cover;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+      transition: color var(--transition);
+    }
+
+    ul {
+      list-style: none;
+    }
+
+    /* ── Utilities ── */
+    .container {
+      width: 100%;
+      max-width: 1140px;
+      margin-inline: auto;
+      padding-inline: 1.25rem;
+    }
+
+    .section-label {
+      display: inline-block;
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--color-teal);
+      margin-bottom: 0.75rem;
+    }
+
+    .section-title {
+      font-family: var(--font-display);
+      font-size: clamp(1.75rem, 4vw, 2.5rem);
+      font-weight: 700;
+      color: var(--color-deep);
+      line-height: 1.2;
+      margin-bottom: 1rem;
+    }
+
+    .section-subtitle {
+      font-size: 1.05rem;
+      color: var(--color-muted);
+      max-width: 560px;
+    }
+
+    .section-header {
+      text-align: center;
+      margin-bottom: 2.5rem;
+    }
+
+    .section-header .section-subtitle {
+      margin-inline: auto;
+    }
+
+    /* ── Buttons ── */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      padding: 0.875rem 1.75rem;
+      font-family: var(--font-body);
+      font-size: 0.95rem;
+      font-weight: 600;
+      border: none;
+      border-radius: 50px;
+      cursor: pointer;
+      transition: transform var(--transition), box-shadow var(--transition), background-color var(--transition);
+    }
+
+    .btn--primary {
+      background: linear-gradient(135deg, var(--color-teal), var(--color-ocean));
+      color: var(--color-white);
+      box-shadow: 0 4px 20px rgba(26, 138, 138, 0.35);
+    }
+
+    .btn--primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 28px rgba(26, 138, 138, 0.45);
+    }
+
+    .btn--outline {
+      background: transparent;
+      color: var(--color-teal);
+      border: 2px solid var(--color-teal);
+    }
+
+    .btn--outline:hover {
+      background: var(--color-teal);
+      color: var(--color-white);
+      transform: translateY(-2px);
+    }
+
+    .btn--ghost-light {
+      background: transparent;
+      color: var(--color-white);
+      border: 2px solid rgba(255, 255, 255, 0.5);
+    }
+
+    .btn--ghost-light:hover {
+      background: rgba(255, 255, 255, 0.12);
+      border-color: var(--color-white);
+      transform: translateY(-2px);
+    }
+
+    /* ── Header ── */
+    .header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 1000;
+      height: var(--header-height);
+      background: rgba(255, 255, 255, 0.92);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--color-border);
+      transition: box-shadow var(--transition);
+    }
+
+    .header--scrolled {
+      box-shadow: var(--shadow-sm);
+    }
+
+    .header__inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 100%;
+    }
+
+    .logo {
+      font-family: var(--font-display);
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--color-deep);
+      letter-spacing: -0.02em;
+    }
+
+    .logo span {
+      color: var(--color-teal);
+    }
+
+    .nav__toggle {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 5px;
+      width: 40px;
+      height: 40px;
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 8px;
+    }
+
+    .nav__toggle span {
+      display: block;
+      width: 100%;
+      height: 2px;
+      background: var(--color-deep);
+      border-radius: 2px;
+      transition: transform var(--transition), opacity var(--transition);
+    }
+
+    .nav__toggle[aria-expanded="true"] span:nth-child(1) {
+      transform: translateY(7px) rotate(45deg);
+    }
+
+    .nav__toggle[aria-expanded="true"] span:nth-child(2) {
+      opacity: 0;
+    }
+
+    .nav__toggle[aria-expanded="true"] span:nth-child(3) {
+      transform: translateY(-7px) rotate(-45deg);
+    }
+
+    .nav__menu {
+      position: fixed;
+      top: var(--header-height);
+      left: 0;
+      right: 0;
+      background: var(--color-white);
+      padding: 1.5rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.25rem;
+      border-bottom: 1px solid var(--color-border);
+      box-shadow: var(--shadow-md);
+      transform: translateY(-120%);
+      opacity: 0;
+      visibility: hidden;
+      transition: transform var(--transition), opacity var(--transition), visibility var(--transition);
+    }
+
+    .nav__menu.is-open {
+      transform: translateY(0);
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .nav__link {
+      display: block;
+      padding: 0.75rem 1rem;
+      font-weight: 500;
+      color: var(--color-text);
+      border-radius: var(--radius);
+      transition: background-color var(--transition), color var(--transition);
+    }
+
+    .nav__link:hover {
+      background: rgba(26, 138, 138, 0.08);
+      color: var(--color-teal);
+    }
+
+    /* ── Hero ── */
+    .hero {
+      position: relative;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      padding-top: var(--header-height);
+      overflow: hidden;
+    }
+
+    .hero__bg {
+      position: absolute;
+      inset: 0;
+      z-index: 0;
+    }
+
+    .hero__bg img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .hero__overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        135deg,
+        rgba(10, 22, 40, 0.88) 0%,
+        rgba(13, 79, 110, 0.72) 50%,
+        rgba(26, 138, 138, 0.55) 100%
+      );
+    }
+
+    .hero__content {
+      position: relative;
+      z-index: 1;
+      padding-block: 4rem 5rem;
+      max-width: 640px;
+    }
+
+    .hero__badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.4rem 1rem;
+      background: rgba(255, 255, 255, 0.12);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 50px;
+      font-size: 0.8rem;
+      font-weight: 500;
+      color: var(--color-aqua);
+      margin-bottom: 1.5rem;
+      backdrop-filter: blur(8px);
+    }
+
+    .hero__title {
+      font-family: var(--font-display);
+      font-size: clamp(2.25rem, 7vw, 3.75rem);
+      font-weight: 700;
+      color: var(--color-white);
+      line-height: 1.1;
+      margin-bottom: 1.25rem;
+    }
+
+    .hero__title em {
+      font-style: normal;
+      color: var(--color-aqua);
+    }
+
+    .hero__text {
+      font-size: clamp(1rem, 2.5vw, 1.15rem);
+      color: rgba(255, 255, 255, 0.85);
+      margin-bottom: 2rem;
+      line-height: 1.7;
+    }
+
+    .hero__actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    .hero__stats {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 2rem;
+      margin-top: 3rem;
+      padding-top: 2rem;
+      border-top: 1px solid rgba(255, 255, 255, 0.15);
+    }
+
+    .hero__stat strong {
+      display: block;
+      font-size: 1.75rem;
+      font-weight: 700;
+      color: var(--color-aqua);
+    }
+
+    .hero__stat span {
+      font-size: 0.85rem;
+      color: rgba(255, 255, 255, 0.65);
+    }
+
+    /* ── About ── */
+    .about {
+      padding-block: 5rem;
+      background: var(--color-white);
+    }
+
+    .about__grid {
+      display: grid;
+      gap: 2.5rem;
+      align-items: center;
+    }
+
+    .about__content p {
+      color: var(--color-muted);
+      margin-bottom: 1.25rem;
+      font-size: 1.05rem;
+    }
+
+    .about__content p:last-of-type {
+      margin-bottom: 0;
+    }
+
+    .about__highlights {
+      display: grid;
+      gap: 1rem;
+      margin-top: 2rem;
+    }
+
+    .about__highlight {
+      display: flex;
+      align-items: flex-start;
+      gap: 1rem;
+      padding: 1rem 1.25rem;
+      background: var(--color-sand);
+      border-radius: var(--radius);
+      border-left: 3px solid var(--color-teal);
+      transition: transform var(--transition), box-shadow var(--transition);
+    }
+
+    .about__highlight:hover {
+      transform: translateX(4px);
+      box-shadow: var(--shadow-sm);
+    }
+
+    .about__highlight-icon {
+      flex-shrink: 0;
+      width: 40px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(135deg, var(--color-teal), var(--color-ocean));
+      border-radius: 10px;
+      color: var(--color-white);
+      font-size: 1.1rem;
+    }
+
+    .about__highlight h3 {
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--color-deep);
+      margin-bottom: 0.25rem;
+    }
+
+    .about__highlight p {
+      font-size: 0.9rem;
+      margin-bottom: 0;
+    }
+
+    /* ── Services ── */
+    .services {
+      padding-block: 5rem;
+      background: linear-gradient(180deg, var(--color-sand) 0%, rgba(244, 247, 249, 0) 100%);
+    }
+
+    .services__grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 1.5rem;
+    }
+
+    .service-card {
+      background: var(--color-white);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      box-shadow: var(--shadow-sm);
+      border: 1px solid var(--color-border);
+      transition: transform var(--transition), box-shadow var(--transition);
+    }
+
+    .service-card:hover {
+      transform: translateY(-6px);
+      box-shadow: var(--shadow-lg);
+    }
+
+    .service-card__image {
+      height: 200px;
+      overflow: hidden;
+    }
+
+    .service-card__image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.5s ease;
+    }
+
+    .service-card:hover .service-card__image img {
+      transform: scale(1.06);
+    }
+
+    .service-card__body {
+      padding: 1.5rem;
+    }
+
+    .service-card__tag {
+      display: inline-block;
+      font-size: 0.7rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--color-teal);
+      background: rgba(26, 138, 138, 0.1);
+      padding: 0.25rem 0.6rem;
+      border-radius: 4px;
+      margin-bottom: 0.75rem;
+    }
+
+    .service-card__title {
+      font-family: var(--font-display);
+      font-size: 1.35rem;
+      font-weight: 600;
+      color: var(--color-deep);
+      margin-bottom: 0.75rem;
+    }
+
+    .service-card__text {
+      font-size: 0.95rem;
+      color: var(--color-muted);
+      line-height: 1.65;
+    }
+
+    /* ── Testimonials ── */
+    .testimonials {
+      padding-block: 5rem;
+      background: var(--color-deep);
+    }
+
+    .testimonials .section-label {
+      color: var(--color-aqua);
+    }
+
+    .testimonials .section-title {
+      color: var(--color-white);
+    }
+
+    .testimonials .section-subtitle {
+      color: rgba(255, 255, 255, 0.65);
+    }
+
+    .testimonials__grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 1.5rem;
+    }
+
+    .testimonial-card {
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: var(--radius-lg);
+      padding: 1.75rem;
+      transition: transform var(--transition), background-color var(--transition), border-color var(--transition);
+    }
+
+    .testimonial-card:hover {
+      transform: translateY(-4px);
+      background: rgba(255, 255, 255, 0.1);
+      border-color: rgba(62, 207, 207, 0.3);
+    }
+
+    .testimonial-card__stars {
+      color: #ffc857;
+      font-size: 1rem;
+      letter-spacing: 2px;
+      margin-bottom: 1rem;
+    }
+
+    .testimonial-card__quote {
+      font-size: 1rem;
+      color: rgba(255, 255, 255, 0.85);
+      line-height: 1.7;
+      margin-bottom: 1.5rem;
+      font-style: italic;
+    }
+
+    .testimonial-card__author {
+      display: flex;
+      align-items: center;
+      gap: 0.875rem;
+    }
+
+    .testimonial-card__avatar {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--color-teal), var(--color-aqua));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      color: var(--color-white);
+      font-size: 0.9rem;
+    }
+
+    .testimonial-card__name {
+      font-weight: 600;
+      color: var(--color-white);
+      font-size: 0.95rem;
+    }
+
+    .testimonial-card__role {
+      font-size: 0.8rem;
+      color: rgba(255, 255, 255, 0.5);
+    }
+
+    /* ── Contact ── */
+    .contact {
+      padding-block: 5rem;
+      background: var(--color-white);
+    }
+
+    .contact__wrapper {
+      display: grid;
+      gap: 2.5rem;
+    }
+
+    .contact__info p {
+      color: var(--color-muted);
+      margin-bottom: 1.5rem;
+    }
+
+    .contact__details {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .contact__detail {
+      display: flex;
+      align-items: center;
+      gap: 0.875rem;
+      font-size: 0.95rem;
+      color: var(--color-text);
+    }
+
+    .contact__detail-icon {
+      width: 40px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(26, 138, 138, 0.1);
+      border-radius: 10px;
+      color: var(--color-teal);
+      font-size: 1rem;
+    }
+
+    .contact__form {
+      background: var(--color-sand);
+      padding: 2rem;
+      border-radius: var(--radius-lg);
+      border: 1px solid var(--color-border);
+    }
+
+    .form-group {
+      margin-bottom: 1.25rem;
+    }
+
+    .form-group label {
+      display: block;
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--color-deep);
+      margin-bottom: 0.5rem;
+    }
+
+    .form-group input,
+    .form-group textarea,
+    .form-group select {
+      width: 100%;
+      padding: 0.875rem 1rem;
+      font-family: var(--font-body);
+      font-size: 0.95rem;
+      color: var(--color-text);
+      background: var(--color-white);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius);
+      transition: border-color var(--transition), box-shadow var(--transition);
+    }
+
+    .form-group input:focus,
+    .form-group textarea:focus,
+    .form-group select:focus {
+      outline: none;
+      border-color: var(--color-teal);
+      box-shadow: 0 0 0 3px rgba(26, 138, 138, 0.15);
+    }
+
+    .form-group textarea {
+      min-height: 120px;
+      resize: vertical;
+    }
+
+    .contact__form .btn {
+      width: 100%;
+    }
+
+    /* ── Footer ── */
+    .footer {
+      background: var(--color-deep);
+      color: rgba(255, 255, 255, 0.7);
+      padding-block: 3rem 1.5rem;
+    }
+
+    .footer__grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 2rem;
+      margin-bottom: 2.5rem;
+    }
+
+    .footer__brand .logo {
+      color: var(--color-white);
+      margin-bottom: 1rem;
+    }
+
+    .footer__brand p {
+      font-size: 0.9rem;
+      line-height: 1.65;
+      max-width: 280px;
+    }
+
+    .footer__heading {
+      font-size: 0.8rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--color-aqua);
+      margin-bottom: 1rem;
+    }
+
+    .footer__links li {
+      margin-bottom: 0.5rem;
+    }
+
+    .footer__links a {
+      font-size: 0.9rem;
+      transition: color var(--transition);
+    }
+
+    .footer__links a:hover {
+      color: var(--color-aqua);
+    }
+
+    .footer__social {
+      display: flex;
+      gap: 0.75rem;
+    }
+
+    .footer__social a {
+      width: 40px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(255, 255, 255, 0.08);
+      border-radius: 10px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      transition: background-color var(--transition), transform var(--transition);
+    }
+
+    .footer__social a:hover {
+      background: var(--color-teal);
+      color: var(--color-white);
+      transform: translateY(-2px);
+    }
+
+    .footer__bottom {
+      padding-top: 1.5rem;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+      text-align: center;
+      font-size: 0.8rem;
+    }
+
+    /* ── Tablet ── */
+    @media (min-width: 640px) {
+      .about__highlights {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .testimonials__grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .footer__grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    /* ── Desktop ── */
+    @media (min-width: 768px) {
+      .nav__toggle {
+        display: none;
+      }
+
+      .nav__menu {
+        position: static;
+        flex-direction: row;
+        align-items: center;
+        gap: 0.25rem;
+        padding: 0;
+        background: transparent;
+        border: none;
+        box-shadow: none;
+        transform: none;
+        opacity: 1;
+        visibility: visible;
+      }
+
+      .nav__link {
+        padding: 0.5rem 1rem;
+        font-size: 0.9rem;
+      }
+
+      .services__grid {
+        grid-template-columns: repeat(3, 1fr);
+      }
+
+      .about__grid {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .contact__wrapper {
+        grid-template-columns: 1fr 1.2fr;
+        align-items: start;
+      }
+
+      .contact__form .btn {
+        width: auto;
+      }
+
+      .testimonials__grid {
+        grid-template-columns: repeat(3, 1fr);
+      }
+
+      .footer__grid {
+        grid-template-columns: 2fr 1fr 1fr 1fr;
+      }
+
+      .footer__bottom {
+        flex-direction: row;
+        justify-content: space-between;
+        text-align: left;
+      }
+    }
+
+    @media (min-width: 1024px) {
+      .service-card__image {
+        height: 220px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Header -->
+  <header class="header" id="header">
+    <div class="container header__inner">
+      <a href="#" class="logo" aria-label="AquaVida — Inicio">Aqua<span>Vida</span></a>
+      <nav class="nav" aria-label="Navegación principal">
+        <button class="nav__toggle" aria-expanded="false" aria-controls="nav-menu" aria-label="Abrir menú">
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+        <ul class="nav__menu" id="nav-menu">
+          <li><a href="#inicio" class="nav__link">Inicio</a></li>
+          <li><a href="#nosotros" class="nav__link">Nosotros</a></li>
+          <li><a href="#servicios" class="nav__link">Servicios</a></li>
+          <li><a href="#testimonios" class="nav__link">Testimonios</a></li>
+          <li><a href="#contacto" class="nav__link">Contacto</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <!-- Hero -->
+    <section class="hero" id="inicio" aria-labelledby="hero-title">
+      <div class="hero__bg">
+        <img
+          src="https://cdn0.expertoanimal.com/es/posts/5/3/4/escalar_panda_27435_4_600.webp"
+          alt="Escalares panda nadando en acuario tropical"
+          onerror="this.src='https://source.unsplash.com/800x600/?aquarium,fish'"
+        >
+        <div class="hero__overlay"></div>
+      </div>
+      <div class="container hero__content">
+        <span class="hero__badge">🐠 Especialistas en Acuariofilia</span>
+        <h1 class="hero__title" id="hero-title">
+          Donde el agua cobra <em>vida</em>
+        </h1>
+        <p class="hero__text">
+          Somos tu tienda y consultora de confianza en paisajismo acuático, plantas y peces tropicales.
+          Desde discus y escalares hasta kois de élite — transformamos tu pasión en un ecosistema vivo y armonioso.
+        </p>
+        <div class="hero__actions">
+          <a href="#contacto" class="btn btn--primary">Solicitar consulta gratuita</a>
+          <a href="#servicios" class="btn btn--ghost-light">Ver servicios</a>
+        </div>
+        <div class="hero__stats">
+          <div class="hero__stat">
+            <strong>15+</strong>
+            <span>Años de experiencia</span>
+          </div>
+          <div class="hero__stat">
+            <strong>2.000+</strong>
+            <span>Acuarios diseñados</span>
+          </div>
+          <div class="hero__stat">
+            <strong>100%</strong>
+            <span>Asesoría personalizada</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Sobre Nosotros -->
+    <section class="about" id="nosotros" aria-labelledby="about-title">
+      <div class="container">
+        <div class="about__grid">
+          <div class="about__content">
+            <span class="section-label">Sobre Nosotros</span>
+            <h2 class="section-title" id="about-title">Pasión por cada gota de agua</h2>
+            <p>
+              En AquaVida nació un sueño compartido: acercar la belleza y la ciencia de la acuariofilia a todos los amantes del mundo acuático.
+              Desde nuestros inicios, hemos cultivado una profunda admiración por los ecosistemas subacuáticos y la delicada armonía entre plantas, peces y paisaje.
+            </p>
+            <p>
+              Nuestra misión es ser mucho más que una tienda. Queremos ser tu consultora de confianza, acompañándote desde la elección de tu primer escalare
+              hasta el diseño de un jardín acuático de nivel competitivo. Cada acuario que creamos es una obra viva, única e irrepetible.
+            </p>
+            <div class="about__highlights">
+              <article class="about__highlight">
+                <div class="about__highlight-icon" aria-hidden="true">🌿</div>
+                <div>
+                  <h3>Conocimiento experto</h3>
+                  <p>Equipo formado en biología acuática y diseño paisajístico.</p>
+                </div>
+              </article>
+              <article class="about__highlight">
+                <div class="about__highlight-icon" aria-hidden="true">💧</div>
+                <div>
+                  <h3>Calidad garantizada</h3>
+                  <p>Peces y plantas de criaderos certificados con trazabilidad total.</p>
+                </div>
+              </article>
+              <article class="about__highlight">
+                <div class="about__highlight-icon" aria-hidden="true">🤝</div>
+                <div>
+                  <h3>Acompañamiento continuo</h3>
+                  <p>Soporte post-venta y mantenimiento para que tu acuario prospere.</p>
+                </div>
+              </article>
+              <article class="about__highlight">
+                <div class="about__highlight-icon" aria-hidden="true">✨</div>
+                <div>
+                  <h3>Diseño a medida</h3>
+                  <p>Proyectos personalizados adaptados a tu espacio y estilo de vida.</p>
+                </div>
+              </article>
+            </div>
+          </div>
+          <div class="about__visual" aria-hidden="true">
+            <div style="background: linear-gradient(135deg, var(--color-teal), var(--color-ocean)); border-radius: var(--radius-lg); padding: 2.5rem; color: white; height: 100%; display: flex; flex-direction: column; justify-content: center;">
+              <blockquote style="font-family: var(--font-display); font-size: 1.5rem; line-height: 1.4; margin-bottom: 1.5rem; font-style: italic;">
+                "Un acuario bien diseñado no es decoración: es un universo en miniatura."
+              </blockquote>
+              <cite style="font-size: 0.9rem; opacity: 0.8; font-style: normal;">— Equipo AquaVida</cite>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Servicios -->
+    <section class="services" id="servicios" aria-labelledby="services-title">
+      <div class="container">
+        <header class="section-header">
+          <span class="section-label">Nuestros Servicios</span>
+          <h2 class="section-title" id="services-title">Todo lo que tu acuario necesita</h2>
+          <p class="section-subtitle">
+            Tres pilares fundamentales para crear y mantener el acuario de tus sueños, con productos y asesoría de primer nivel.
+          </p>
+        </header>
+        <div class="services__grid">
+          <article class="service-card">
+            <div class="service-card__image">
+              <img
+                src="https://cdn.shopify.com/s/files/1/0311/3149/files/shutterstock_96677104.jpg?v=1584639688"
+                alt="Peces tropicales discus de colores vibrantes"
+                onerror="this.src='https://source.unsplash.com/800x600/?aquarium,fish'"
+              >
+            </div>
+            <div class="service-card__body">
+              <span class="service-card__tag">Especies</span>
+              <h3 class="service-card__title">Peces Tropicales</h3>
+              <p class="service-card__text">
+                Selección premium de discus, escalares, tetras y cíclidos de criaderos certificados.
+                Asesoramos en compatibilidad, parámetros del agua y alimentación para un acuario saludable y espectacular.
+              </p>
+            </div>
+          </article>
+          <article class="service-card">
+            <div class="service-card__image">
+              <img
+                src="https://h.hannainst.com.mx/wp-content/uploads/Paisajismo-acua%CC%81tico-600x232.png"
+                alt="Diseño de paisajismo acuático con plantas y rocas"
+                onerror="this.src='https://source.unsplash.com/800x600/?aquarium,fish'"
+              >
+            </div>
+            <div class="service-card__body">
+              <span class="service-card__tag">Diseño</span>
+              <h3 class="service-card__title">Paisajismo Acuático</h3>
+              <p class="service-card__text">
+                Diseñamos jardines subacuáticos de estilo Iwagumi, Dutch o Nature Aquarium.
+                Selección de sustratos, rocas, maderas y plantas acuáticas para composiciones de impacto visual.
+              </p>
+            </div>
+          </article>
+          <article class="service-card">
+            <div class="service-card__image">
+              <img
+                src="https://muyinteresante.okdiario.com/wp-content/uploads/sites/5/2022/10/13/6347fb6714174.jpeg"
+                alt="Estanque con kois y equipamiento acuático profesional"
+                onerror="this.src='https://source.unsplash.com/800x600/?aquarium,fish'"
+              >
+            </div>
+            <div class="service-card__body">
+              <span class="service-card__tag">Infraestructura</span>
+              <h3 class="service-card__title">Equipamiento y Kois</h3>
+              <p class="service-card__text">
+                Filtros, iluminación LED, CO₂ y sistemas de última generación.
+                Kois japoneses de líneas selectas y todo el equipamiento para estanques y acuarios de gran formato.
+              </p>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- Testimonios -->
+    <section class="testimonials" id="testimonios" aria-labelledby="testimonials-title">
+      <div class="container">
+        <header class="section-header">
+          <span class="section-label">Testimonios</span>
+          <h2 class="section-title" id="testimonials-title">Lo que dicen nuestros clientes</h2>
+          <p class="section-subtitle">
+            La satisfacción de quienes confiaron en nosotros es nuestro mejor aval.
+          </p>
+        </header>
+        <div class="testimonials__grid">
+          <article class="testimonial-card">
+            <div class="testimonial-card__stars" aria-label="5 estrellas">★★★★★</div>
+            <blockquote class="testimonial-card__quote">
+              "Compré mis primeros discus con AquaVida y la diferencia fue abismal. Me guiaron en cada paso del ciclo del nitrógeno
+              y hoy tengo un acuario que es la envidia de todos mis amigos."
+            </blockquote>
+            <footer class="testimonial-card__author">
+              <div class="testimonial-card__avatar" aria-hidden="true">MR</div>
+              <div>
+                <p class="testimonial-card__name">María Rodríguez</p>
+                <p class="testimonial-card__role">Aficionada desde 2023</p>
+              </div>
+            </footer>
+          </article>
+          <article class="testimonial-card">
+            <div class="testimonial-card__stars" aria-label="5 estrellas">★★★★★</div>
+            <blockquote class="testimonial-card__quote">
+              "Encargué un paisajismo acuático estilo Iwagumi para mi salón. El resultado superó todas mis expectativas.
+              Profesionales, puntuales y con un ojo artístico increíble."
+            </blockquote>
+            <footer class="testimonial-card__author">
+              <div class="testimonial-card__avatar" aria-hidden="true">CL</div>
+              <div>
+                <p class="testimonial-card__name">Carlos López</p>
+                <p class="testimonial-card__role">Diseñador de interiores</p>
+              </div>
+            </footer>
+          </article>
+          <article class="testimonial-card">
+            <div class="testimonial-card__stars" aria-label="5 estrellas">★★★★★</div>
+            <blockquote class="testimonial-card__quote">
+              "Mi estanque de kois era un desastre hasta que contacté con AquaVida. Reconfiguraron todo el sistema de filtración
+              y ahora mis peces lucen espectaculares. Servicio impecable."
+            </blockquote>
+            <footer class="testimonial-card__author">
+              <div class="testimonial-card__avatar" aria-hidden="true">AG</div>
+              <div>
+                <p class="testimonial-card__name">Ana García</p>
+                <p class="testimonial-card__role">Propietaria de estanque koi</p>
+              </div>
+            </footer>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- Contacto -->
+    <section class="contact" id="contacto" aria-labelledby="contact-title">
+      <div class="container">
+        <div class="contact__wrapper">
+          <div class="contact__info">
+            <span class="section-label">Contacto</span>
+            <h2 class="section-title" id="contact-title">¿Listo para tu acuario ideal?</h2>
+            <p>
+              Cuéntanos tu proyecto y te responderemos en menos de 24 horas con una propuesta personalizada.
+              La consulta inicial es completamente gratuita.
+            </p>
+            <address class="contact__details" style="font-style: normal;">
+              <div class="contact__detail">
+                <span class="contact__detail-icon" aria-hidden="true">📍</span>
+                <span>Calle del Acuario 42, Madrid, España</span>
+              </div>
+              <div class="contact__detail">
+                <span class="contact__detail-icon" aria-hidden="true">📞</span>
+                <a href="tel:+34900123456">+34 900 123 456</a>
+              </div>
+              <div class="contact__detail">
+                <span class="contact__detail-icon" aria-hidden="true">✉️</span>
+                <a href="mailto:info@aquavida.es">info@aquavida.es</a>
+              </div>
+            </address>
+          </div>
+          <form class="contact__form" action="#" method="post" aria-label="Formulario de contacto">
+            <div class="form-group">
+              <label for="nombre">Nombre completo</label>
+              <input type="text" id="nombre" name="nombre" placeholder="Tu nombre" required autocomplete="name">
+            </div>
+            <div class="form-group">
+              <label for="email">Correo electrónico</label>
+              <input type="email" id="email" name="email" placeholder="tu@email.com" required autocomplete="email">
+            </div>
+            <div class="form-group">
+              <label for="asunto">Tipo de consulta</label>
+              <select id="asunto" name="asunto" required>
+                <option value="" disabled selected>Selecciona una opción</option>
+                <option value="peces">Peces Tropicales</option>
+                <option value="paisajismo">Paisajismo Acuático</option>
+                <option value="equipamiento">Equipamiento y Kois</option>
+                <option value="otro">Otra consulta</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="mensaje">Mensaje</label>
+              <textarea id="mensaje" name="mensaje" placeholder="Cuéntanos sobre tu proyecto o duda..." required></textarea>
+            </div>
+            <button type="submit" class="btn btn--primary">Enviar consulta</button>
+          </form>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer__grid">
+        <div class="footer__brand">
+          <a href="#" class="logo">Aqua<span>Vida</span></a>
+          <p>Tu tienda y consultora especializada en acuariofilia, paisajismo acuático y peces tropicales de élite.</p>
+        </div>
+        <div>
+          <h3 class="footer__heading">Empresa</h3>
+          <ul class="footer__links">
+            <li><a href="#nosotros">Sobre Nosotros</a></li>
+            <li><a href="#servicios">Servicios</a></li>
+            <li><a href="#testimonios">Testimonios</a></li>
+            <li><a href="#contacto">Contacto</a></li>
+          </ul>
+        </div>
+        <div>
+          <h3 class="footer__heading">Legal</h3>
+          <ul class="footer__links">
+            <li><a href="#">Aviso Legal</a></li>
+            <li><a href="#">Política de Privacidad</a></li>
+            <li><a href="#">Términos y Condiciones</a></li>
+            <li><a href="#">Cookies</a></li>
+          </ul>
+        </div>
+        <div>
+          <h3 class="footer__heading">Síguenos</h3>
+          <div class="footer__social">
+            <a href="#" aria-label="Instagram">IG</a>
+            <a href="#" aria-label="Facebook">FB</a>
+            <a href="#" aria-label="YouTube">YT</a>
+            <a href="#" aria-label="TikTok">TK</a>
+          </div>
+        </div>
+      </div>
+      <div class="footer__bottom">
+        <p>&copy; 2026 AquaVida. Todos los derechos reservados.</p>
+        <p>Hecho con 💙 para los amantes del mundo acuático.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    /* Mobile nav toggle */
+    const toggle = document.querySelector('.nav__toggle');
+    const menu = document.querySelector('.nav__menu');
+    const navLinks = document.querySelectorAll('.nav__link');
+
+    toggle.addEventListener('click', () => {
+      const isOpen = menu.classList.toggle('is-open');
+      toggle.setAttribute('aria-expanded', isOpen);
+    });
+
+    navLinks.forEach(link => {
+      link.addEventListener('click', () => {
+        menu.classList.remove('is-open');
+        toggle.setAttribute('aria-expanded', 'false');
+      });
+    });
+
+    /* Header shadow on scroll */
+    const header = document.getElementById('header');
+    window.addEventListener('scroll', () => {
+      header.classList.toggle('header--scrolled', window.scrollY > 10);
+    }, { passive: true });
+
+    /* Form submit feedback */
+    document.querySelector('.contact__form').addEventListener('submit', (e) => {
+      e.preventDefault();
+      alert('¡Gracias por tu consulta! Te contactaremos en menos de 24 horas.');
+      e.target.reset();
+    });
+  </script>
+</body>
+</html>
